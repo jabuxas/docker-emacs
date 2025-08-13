@@ -2,9 +2,10 @@ FROM    archlinux:latest
 ARG     USERNAME=dev
 ARG     USER_UID=1000
 ARG     USER_GID=$USER_UID
-ENV     RUSTUP_HOME     /usr/local/rustup \
-        CARGO_HOME      /usr/local/cargo \
-        PATH            /usr/local/cargo/bin:$PATH
+
+ENV     RUSTUP_HOME=/usr/local/rustup \
+        CARGO_HOME=/usr/local/cargo \
+        PATH=/usr/local/cargo/bin:$PATH
 
 RUN     pacman-key --init \
         && pacman-key --populate archlinux \
@@ -41,7 +42,7 @@ RUN     groupadd --gid $USER_GID $USERNAME \
 USER    $USERNAME
 WORKDIR /home/$USERNAME
 
-ENV     PATH    "/home/$USERNAME/.config/emacs/bin:$PATH"
+ENV     PATH="/home/$USERNAME/.config/emacs/bin:$PATH"
 
 RUN     git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 
