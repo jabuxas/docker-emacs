@@ -48,7 +48,7 @@ RUN     git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/ema
 
 COPY    doom    /home/$USERNAME/.config/doom
 
-RUN     /home/$USERNAME/.config/emacs/bin/doom install \
+RUN     /home/$USERNAME/.config/emacs/bin/doom install --env \
         && /home/$USERNAME/.config/emacs/bin/doom sync
 
 CMD     ["emacs"]
