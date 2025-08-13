@@ -13,7 +13,7 @@ RUN     pacman-key --init \
         && pacman -S --noconfirm         emacs \
         base-devel git sudo curl wget unzip ripgrep fd \
         zathura poppler libnotify fontconfig \
-        go jdk-openjdk python python-pip php lua \
+        go gopls rust-analyzer jdk-openjdk python python-pip php lua \
         nodejs npm \
         tectonic \
         bash fish \
