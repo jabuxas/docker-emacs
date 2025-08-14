@@ -1,7 +1,4 @@
 FROM    archlinux:latest
-ARG     USERNAME=dev
-ARG     USER_UID=1001
-ARG     USER_GID=$USER_UID
 
 ENV     RUSTUP_HOME=/usr/local/rustup \
         CARGO_HOME=/usr/local/cargo \
@@ -34,21 +31,15 @@ RUN     mkdir -p /tmp/fonts \
         && fc-cache -fv \
         && rm -rf /tmp/fonts
 
-RUN     groupadd --gid $USER_GID $USERNAME \
-        && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME --shell /bin/bash \
-        && usermod -aG wheel $USERNAME \
-        && echo "%wheel ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+WORKDIR /root
 
-USER    $USERNAME
-WORKDIR /home/$USERNAME
-
-ENV     PATH="/home/$USERNAME/.config/emacs/bin:$PATH"
+ENV     PATH="/root/.config/emacs/bin:$PATH"
 
 RUN     git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 
-COPY    doom    /home/$USERNAME/.config/doom
+COPY    doom    /root/.config/doom
 
-RUN     /home/$USERNAME/.config/emacs/bin/doom install --no-env \
-        && /home/$USERNAME/.config/emacs/bin/doom sync
+RUN     /root/.config/emacs/bin/doom install --no-env \
+        && /root/.config/emacs/bin/doom sync
 
 CMD     ["emacs"]
