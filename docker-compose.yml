@@ -16,4 +16,4 @@ services:
       
       - ./doom:/home/dev/.config/doom
       
-      - ${HOME}:/home/dev/work
+      - ${HOME}:/root/wsp
