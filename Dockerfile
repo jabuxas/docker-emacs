@@ -11,7 +11,7 @@ RUN     pacman-key --init \
         base-devel git sudo curl wget unzip ripgrep fd \
         zathura poppler libnotify fontconfig \
         go gopls rust-analyzer jdk-openjdk python python-pip php lua \
-        nodejs npm clangd \
+        nodejs npm \
         tectonic \
         bash fish \
         && pacman -Scc --noconfirm \
