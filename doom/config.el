@@ -1,4 +1,4 @@
-                                ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 (setq lsp-use-plists t)
 (setq shell-file-name (executable-find "bash"))
 (setq-default term-shell (executable-find "fish"))
@@ -18,7 +18,7 @@
 ;;   presentations or streaming.
 ;; - `doom-symbol-font' -- for symbols
 ;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
-(setq doom-font "Terminess Nerd Font-20")
+(setq doom-font "Terminess Nerd Font-18")
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -193,17 +193,16 @@
 
 (defun kb/toggle-window-transparency (arg)
   "Toggle the value of `alpha-background'.
-
-                                Toggles between 100 and 85 by default.
-                                If called with ARG (via C-u or numeric input), asks the user which value to set."
+        Toggles between 100 and 85 by default.
+        If called with ARG (via C-u or numeric input), asks the user which value to set."
   (interactive "P")
   (let ((transparency
          (cond
           ((numberp arg) arg)
           (arg (read-number "Change the transparency to which value (0-100)? "))
           (t (pcase (frame-parameter nil 'alpha-background)
-               (95 100)
-               (100 95)
+               (90 100)
+               (100 90)
                (_ 95))))))
     (set-frame-parameter nil 'alpha-background transparency)
     (message "Transparency set to %s" transparency)))
@@ -334,7 +333,9 @@
                '("AUTO" "babel" t ("pdflatex" "xelatex" "lualatex"))))
 
 ;; set default project path
-(setq projectile-project-search-path '(("~/proprietary/" . 2)))
+(setq! projectile-project-search-path '("/srv" "/git" ("/ifsc" . 1)))
+(setq! projectile-auto-cleanup-known-projects t)
+(setq! projectile-enable-caching nil)
 
 (after! hydra
   (defun get-project-compile-commands ()
@@ -440,13 +441,13 @@
 ;;       `(minimap-active-region-background :background ,blend-color))))
 
 (use-package treesit
-  :mode (("\\.tsx\\'" . tsx-ts-mode)
-         ("\\.js\\'"  . typescript-ts-mode)
-         ("\\.mjs\\'" . typescript-ts-mode)
-         ("\\.mts\\'" . typescript-ts-mode)
-         ("\\.cjs\\'" . typescript-ts-mode)
-         ("\\.ts\\'"  . typescript-ts-mode)
-         ("\\.jsx\\'" . tsx-ts-mode)
+  :mode (("\\.tsx\\'" . typescript-tsx-mode)
+         ("\\.js\\'"  . typescript-mode)
+         ("\\.mjs\\'" . typescript-mode)
+         ("\\.mts\\'" . typescript-mode)
+         ("\\.cjs\\'" . typescript-mode)
+         ("\\.ts\\'"  . typescript-mode)
+         ("\\.jsx\\'" . typescript-tsx-mode)
          ("\\.json\\'" .  json-ts-mode)
          ("\\.Dockerfile\\'" . dockerfile-ts-mode)
          ("\\.prisma\\'" . prisma-ts-mode)
