@@ -18,7 +18,7 @@
 ;;   presentations or streaming.
 ;; - `doom-symbol-font' -- for symbols
 ;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
-(setq doom-font "Terminess Nerd Font-18")
+(setq doom-font "Terminess Nerd Font-20")
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -78,7 +78,13 @@
 
 ;; (setq! doom-theme 'doom-oksolar-dark)
 ;; (setq! doom-theme 'doom-henna)
-(setq! doom-theme 'doom-monokai-spectrum)
+
+;; dark theme
+;; (setq! doom-theme 'doom-monokai-spectrum)
+(setq! doom-theme 'doom-nord)
+
+;; light theme
+;; (setq! doom-theme 'doom-oksolar-light)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -162,31 +168,31 @@
       "r g" #'+default/search-project)
 
 ;; accept completion from copilot and fallback to company
-(use-package! copilot
-  :hook (prog-mode . copilot-mode)
-  :bind (:map copilot-completion-map
-              ("<tab>" . 'copilot-accept-completion)
-              ("TAB" . 'copilot-accept-completion)
-              ("C-TAB" . 'copilot-accept-completion-by-word)
-              ("C-<tab>" . 'copilot-accept-completion-by-word))
-  :config
-  (add-to-list 'copilot-indentation-alist '(prog-mode 2))
-  (add-to-list 'copilot-indentation-alist '(org-mode 2))
-  (add-to-list 'copilot-indentation-alist '(text-mode 2))
-  (add-to-list 'copilot-indentation-alist '(closure-mode 2))
-  (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 2)))
+;; (use-package! copilot
+;;   :hook (prog-mode . copilot-mode)
+;;   :bind (:map copilot-completion-map
+;;               ("<tab>" . 'copilot-accept-completion)
+;;               ("TAB" . 'copilot-accept-completion)
+;;               ("C-TAB" . 'copilot-accept-completion-by-word)
+;;               ("C-<tab>" . 'copilot-accept-completion-by-word))
+;;   :config
+;;   (add-to-list 'copilot-indentation-alist '(prog-mode 2))
+;;   (add-to-list 'copilot-indentation-alist '(org-mode 2))
+;;   (add-to-list 'copilot-indentation-alist '(text-mode 2))
+;;   (add-to-list 'copilot-indentation-alist '(closure-mode 2))
+;;   (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 2)))
 
-(after! (evil copilot)
-  ;; Define the custom function that either accepts the completion or does the default behavior
-  (defun my/copilot-tab-or-default ()
-    (interactive)
-    (if (and (bound-and-true-p copilot-mode)
-             (not (eq major-mode 'erc-mode))) ; Exclude ERC mode
-        (copilot-accept-completion)
-      (call-interactively (key-binding (kbd "TAB")))))
+;; (after! (evil copilot)
+;;   ;; Define the custom function that either accepts the completion or does the default behavior
+;;   (defun my/copilot-tab-or-default ()
+;;     (interactive)
+;;     (if (and (bound-and-true-p copilot-mode)
+;;              (not (eq major-mode 'erc-mode))) ; Exclude ERC mode
+;;         (copilot-accept-completion)
+;;       (call-interactively (key-binding (kbd "TAB")))))
 
-  ;; Bind the custom function to <tab> in Evil's insert state
-  (evil-define-key 'insert 'global (kbd "<tab>") 'my/copilot-tab-or-default))
+;;   ;; Bind the custom function to <tab> in Evil's insert state
+;;   (evil-define-key 'insert 'global (kbd "<tab>") 'my/copilot-tab-or-default))
 
 
 ;; (add-to-list 'auto-mode-alist '("\\.php\\'" . php-mode))
@@ -203,7 +209,7 @@
           (t (pcase (frame-parameter nil 'alpha-background)
                (90 100)
                (100 90)
-               (_ 95))))))
+               (_ 90))))))
     (set-frame-parameter nil 'alpha-background transparency)
     (message "Transparency set to %s" transparency)))
 
@@ -595,3 +601,8 @@
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]vendor\\'")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]node_modules\\'")
   (setq lsp-file-watch-threshold 2000))
+
+(use-package! zone
+  :defer t
+  :config
+  (zone-when-idle 300))
